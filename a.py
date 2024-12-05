@@ -383,6 +383,98 @@ y_pred = predict(X_test, priors, likelihoods)
 # Accuracy
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy * 100:.2f}%")
+
+
+------------------the end of code 1--------------------------------------------------------------------
+
+Easier Code for NaiveBayes:
+
+# Import necessary libraries
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# Function to load dataset from a CSV file
+def load_custom_dataset(filepath):
+    data = pd.read_csv(filepath)
+    X = data.iloc[:, :-1].values  # Features: all columns except the last one
+    y = data.iloc[:, -1].values   # Target: last column
+    return X, y
+
+# Prompt user for the dataset file path
+filepath = input("Enter the path to the dataset CSV file: ")
+
+try:
+    # Load the dataset
+    X, y = load_custom_dataset(filepath)
+
+    # Split the dataset into training and testing sets (80% train, 20% test)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Initialize the Gaussian Naive Bayes classifier
+    nb_classifier = GaussianNB()
+
+    # Train the classifier on the training data
+    nb_classifier.fit(X_train, y_train)
+
+    # Predict the labels for the test set
+    y_pred = nb_classifier.predict(X_test)
+
+    # Evaluate the model
+    accuracy = accuracy_score(y_test, y_pred)
+    print(f"Accuracy of Naive Bayes Classifier: {accuracy * 100:.2f}%")
+
+    # Display a detailed classification report
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+
+    # Display the confusion matrix
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
+
+except Exception as e:
+    print(f"An error occurred while loading or processing the dataset: {e}")
+
+
+----------end of code 2------------------------------------------------------------------------------------
+
+#Using iris
+# Import necessary libraries
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# Load the Iris dataset
+iris = load_iris()
+X = iris.data  # Features: sepal length, sepal width, petal length, petal width
+y = iris.target  # Target: species (0: setosa, 1: versicolor, 2: virginica)
+
+# Split the dataset into training and testing sets (80% train, 20% test)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize the Gaussian Naive Bayes classifier
+nb_classifier = GaussianNB()
+
+# Train the classifier on the training data
+nb_classifier.fit(X_train, y_train)
+
+# Predict the labels for the test set
+y_pred = nb_classifier.predict(X_test)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy of Naive Bayes Classifier: {accuracy * 100:.2f}%")
+
+# Display a detailed classification report
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred, target_names=iris.target_names))
+
+# Display the confusion matrix
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
                    
 ----------------------------------------------------------------------------------------------
 
